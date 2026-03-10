@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Zilisha</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --porcelain: #FDFCF7;
+      --ink:       #0A0A08;
+      --muted:     #4a4d44;
+      --saffron:   #F7C126;
+    }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: var(--porcelain);
+      color: var(--ink);
+      min-height: 100vh;
+      position: relative;
+    }
+
+    /* ── NAV ── */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 28px 56px;
+    }
+
+    /* Logo */
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      text-decoration: none;
+      color: var(--ink);
+    }
+    .logo img {
+      height: 28px;
+      width: auto;
+    }
+    .logo-name {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.25rem;
+      letter-spacing: -.02em;
+    }
+
+    /* Links */
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: .82rem;
+      font-weight: 700;
+      letter-spacing: .01em;
+      text-transform: uppercase;
+      color: #000;
+      text-decoration: none;
+      transition: color .18s;
+    }
+    .nav-links a:hover { color: #f9c32c; }
+
+    /* Actions */
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .btn-login {
+      font-size: .82rem;
+      font-weight: 700;
+      letter-spacing: .01em;
+      text-transform: uppercase;
+      color: #000;
+      text-decoration: none;
+      transition: color .18s;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+    .btn-login:hover { color: #f9c32c; }
+
+    .btn-get-started {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      color: #000;
+      font-family: 'Roboto', sans-serif;
+      font-size: .82rem;
+      font-weight: 700;
+      letter-spacing: .01em;
+      text-transform: uppercase;
+      transition: color .18s;
+    }
+    .btn-get-started:hover { color: #f9c32c; }
+
+    .arrow-circle {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: transparent;
+      border: 2px solid #f9c32c;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background .18s;
+    }
+    .btn-get-started:hover .arrow-circle {
+      background: #f9c32c;
+    }
+    .arrow-circle svg {
+      width: 13px;
+      height: 13px;
+      stroke: #000;
+    }
+
+    /* ── Hamburger (mobile) ── */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--ink);
+      border-radius: 2px;
+      transition: transform .3s, opacity .3s;
+    }
+
+    /* Mobile drawer */
+    .mobile-menu {
+      display: none;
+      flex-direction: column;
+      gap: 0;
+      padding: 0 28px 24px;
+    }
+    .mobile-menu a {
+      font-size: .9rem;
+      font-weight: 500;
+      letter-spacing: .01em;
+      text-transform: uppercase;
+      color: var(--ink);
+      text-decoration: none;
+      opacity: .65;
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(1,0,1,.07);
+    }
+    .mobile-menu a:last-child { border-bottom: none; }
+    .mobile-menu.open { display: flex; }
+
+    /* ── Responsive ── */
+    @media (max-width: 860px) {
+      nav { padding: 22px 28px; }
+      .nav-links, .nav-actions { display: none; }
+      .hamburger { display: flex; }
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      display: flex;
+      align-items: center;
+      padding: 60px 56px 80px;
+      gap: 0;
+      overflow: hidden;
+    }
+
+    /* Left */
+    .hero-left {
+      position: relative;
+      z-index: 2;
+      flex: 0 0 55%;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .hero-pill {
+      display: inline-flex;
+      align-items: center;
+      background: #f9c32c;
+      color: #000;
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .02em;
+      text-transform: uppercase;
+      padding: 7px 18px;
+      border-radius: 50px;
+      width: fit-content;
+    }
+
+    .hero-headline {
+      font-family: 'Roboto', sans-serif;
+      font-weight: 900;
+      font-size: clamp(2.8rem, 5vw, 4.2rem);
+      line-height: 1.06;
+      color: #000;
+    }
+    .hero-headline .gradient-text {
+      background: linear-gradient(90deg, #C7D6B0 0%, #8aab6e 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-style: italic;
+    }
+
+    .hero-subtitle {
+      font-size: 1rem;
+      line-height: 1.7;
+      color: #555;
+      max-width: 360px;
+    }
+
+    /* CTAs */
+    .hero-cta {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      margin-top: 8px;
+    }
+
+    .btn-hero-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #111;
+      color: #fcfbf6;
+      text-decoration: none;
+      border-radius: 50px;
+      padding: 10px 10px 10px 24px;
+      font-family: 'Roboto', sans-serif;
+      font-weight: 700;
+      font-size: .82rem;
+      letter-spacing: .01em;
+      text-transform: uppercase;
+      transition: background .2s;
+    }
+    .btn-hero-primary:hover { background: #2a2a2a; }
+
+    .btn-hero-primary .btn-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 2px solid #fcfbf6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background .18s;
+    }
+    .btn-hero-primary:hover .btn-icon { background: #fcfbf6; }
+    .btn-hero-primary .btn-icon svg {
+      width: 13px;
+      height: 13px;
+      stroke: #fcfbf6;
+      transition: stroke .18s;
+    }
+    .btn-hero-primary:hover .btn-icon svg { stroke: #111; }
+
+    .btn-hero-secondary {
+      font-family: 'Roboto', sans-serif;
+      font-size: .82rem;
+      font-weight: 700;
+      letter-spacing: .01em;
+      text-transform: uppercase;
+      color: #000;
+      text-decoration: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      transition: color .18s;
+    }
+    .btn-hero-secondary:hover { color: #f9c32c; }
+
+    /* Right — image sits absolute so headline text can bleed under it */
+    .hero-right {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      width: 50%;
+      display: flex;
+      justify-content: flex-end;
+      align-items: flex-end;
+      pointer-events: none;
+    }
+
+    .hero-right img {
+      width: 100%;
+      max-width: 560px;
+      height: auto;
+      display: block;
+    }
+
+    /* ── Hero Responsive ── */
+    @media (max-width: 860px) {
+      .hero {
+        flex-direction: column;
+        padding: 40px 28px 0;
+        align-items: flex-start;
+      }
+      .hero-left {
+        flex: none;
+        width: 100%;
+      }
+      .hero-subtitle { max-width: 100%; }
+      .hero-right {
+        position: relative;
+        width: 100%;
+        margin-top: 32px;
+      }
+      .hero-right img { max-width: 100%; }
+    }
+    /* ── CORNER IMAGE ── */
+    .corner-img {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 405px;
+      height: auto;
+      z-index: -1;
+      pointer-events: none;
+      display: block;
+      opacity: 0.5;
+    }
+
+    @media (max-width: 860px) {
+      .corner-img { display: none; }
+    }
+
+    /* ── STATS ── */
+    .stats {
+      padding: 48px 56px 56px;
+    }
+
+    .stats-inner {
+      background: linear-gradient(105deg, #e0e3e4 0%, #ebead7 55%, #efead5 100%);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      padding: 36px 48px;
+    }
+
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .stat-value {
+      font-family: 'Roboto', sans-serif;
+      font-weight: 900;
+      font-size: 2.2rem;
+      color: #000;
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-family: 'Roboto', sans-serif;
+      font-size: .7rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      color: #666;
+      letter-spacing: .04em;
+    }
+
+    .stat-divider {
+      width: 1px;
+      height: 36px;
+      background: rgba(0,0,0,.12);
+    }
+
+    @media (max-width: 860px) {
+      .stats { padding: 0 28px 48px; }
+      .stats-inner {
+        flex-wrap: wrap;
+        gap: 28px;
+        padding: 32px 28px;
+        justify-content: center;
+      }
+      .stat-divider { display: none; }
+      .stat-item { min-width: 40%; }
+    }
+
+    @media (max-width: 480px) {
+      .stat-item { min-width: 100%; }
+    }
+
+  </style>
+</head>
+<body>
+
+  <img
+    class="corner-img"
+    src="https://github.com/mavencharlton/content/blob/main/Gemini_Generated_Image_j1j9z7j1j9z7j1j9__1_-removebg-preview.png?raw=true"
+    alt=""
+  />
+
+  <nav>
+    <!-- Logo -->
+    <a href="#" class="logo">
+      <img src="https://raw.githubusercontent.com/mavencharlton/content/2b16c47f851d09f1491776e224e1059a369d40b5/Gemini_Generated_Image_tzh2qbtzh2qbtzh2__1_-removebg-preview.svg" alt="Zilisha logo"/>
+      <span class="logo-name">Zilisha</span>
+    </a>
+
+    <!-- Links -->
+    <ul class="nav-links">
+      <li><a href="#">Home</a></li>
+      <li><a href="#">Pricing</a></li>
+      <li><a href="#">Services</a></li>
+      <li><a href="#">Blog</a></li>
+      <li><a href="#">About Us</a></li>
+    </ul>
+
+    <!-- Actions -->
+    <div class="nav-actions">
+      <a href="#" class="btn-login">Login</a>
+      <a href="#" class="btn-get-started">
+        Get Started
+        <span class="arrow-circle">
+          <svg viewBox="0 0 14 14" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 7h10M7 2l5 5-5 5"/>
+          </svg>
+        </span>
+      </a>
+    </div>
+
+    <!-- Hamburger -->
+    <button class="hamburger" id="menuBtn" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#">Home</a>
+    <a href="#">Pricing</a>
+    <a href="#">Services</a>
+    <a href="#">Blog</a>
+    <a href="#">About Us</a>
+    <a href="#">Login</a>
+    <a href="#">Get Started →</a>
+  </div>
+
+  <!-- Hero -->
+  <section class="hero">
+
+    <div class="hero-left">
+      <span class="hero-pill">We can help you</span>
+
+      <h1 class="hero-headline">
+        Grow <span class="gradient-text">faster</span> with our<br/>
+        high-performing<br/>
+        social ads
+      </h1>
+
+      <p class="hero-subtitle">
+        We aren't your average run-of-the-mill marketing agency — our campaigns are built to drive real results. We help SMEs grow with social ads that actually perform.
+      </p>
+
+      <div class="hero-cta">
+        <a href="#" class="btn-hero-primary">
+          Get Started
+          <span class="btn-icon">
+            <svg viewBox="0 0 14 14" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M2 7h10M7 2l5 5-5 5"/>
+            </svg>
+          </span>
+        </a>
+        <a href="#" class="btn-hero-secondary">Learn More</a>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <img
+        src="https://github.com/mavencharlton/content/blob/main/Screenshot_2026-03-10_at_16-10-44_image__3_.png__PNG_Image_1080___787_pixels_-removebg-preview.png?raw=true"
+        alt="Woman pointing at sale notification"
+      />
+    </div>
+
+  </section>
+
+  <!-- Stats -->
+  <section class="stats">
+    <div class="stats-inner">
+      <div class="stat-item">
+        <span class="stat-value">1,200+</span>
+        <span class="stat-label">Campaigns Launched</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-value">5.6M+</span>
+        <span class="stat-label">Total Leads</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-value">4.8</span>
+        <span class="stat-label">Average Review</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-value">40+</span>
+        <span class="stat-label">Ads Live in 46 Hours</span>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const btn = document.getElementById('menuBtn');
+    const menu = document.getElementById('mobileMenu');
+    btn.addEventListener('click', () => menu.classList.toggle('open'));
+  </script>
+
+</body>
+</html>
